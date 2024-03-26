@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.8;
 
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+//import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
 
 error NotOwner();
@@ -13,11 +13,11 @@ contract FundMe {
     address[] public funders;
 
     // Could we make this constant?  /* hint: no! We should make it immutable! */
-    address public /* immutable */ i_owner;
+    address public owner;
     uint256 public constant MINIMUM_USD = 50 * 10 ** 18;
     
     constructor() {
-        i_owner = msg.sender;
+        owner = msg.sender;
     }
 
     function fund() public payable {
@@ -42,15 +42,16 @@ contract FundMe {
        }
     
     
-    function getVersion() public view returns (uint256){
+ /*   function getVersion() public view returns (uint256){
         // ETH/USD price feed address of Sepolia Network.
         AggregatorV3Interface priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
         return priceFeed.version();
-    }
-    
+    } */
+
+
     modifier onlyOwner {
         // require(msg.sender == owner);
-        if (msg.sender != i_owner) revert NotOwner();
+        if (msg.sender != owner) revert NotOwner();
         _;
     }
     
