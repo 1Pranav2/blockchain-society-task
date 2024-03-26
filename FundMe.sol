@@ -54,7 +54,14 @@ contract FundMe {
         if (msg.sender != owner) revert NotOwner();
         _;
     }
-    
+
+
+     function transferOwnership(address _newOwner) public onlyOwner
+     {
+       require( _newOwner!=address(0));
+        owner=_newOwnwer;'
+     ]
+       
     function withdraw() public onlyOwner {
         for (uint256 funderIndex=0; funderIndex < funders.length; funderIndex++){
             address funder = funders[funderIndex];
