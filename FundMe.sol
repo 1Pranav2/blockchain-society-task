@@ -22,10 +22,25 @@ contract FundMe {
 
     function fund() public payable {
         require(msg.value.getConversionRate() >= MINIMUM_USD, "You need to spend more ETH!");
-        // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
+ // require(PriceConverter.getConversionRate(msg.value) >= MINIMUM_USD, "You need to spend more ETH!");
+       bool isNewfunder=true;
+       uint8 flag=0;
+         for(uint256 fundersIndex=0;fundersIndex<funders.length;funders++)
+             {
+               if(msg.sender==funders[fundersIndex])
+                  {
+                    addressToAmountFunded[funders[fundersIndex]] += msg.value;
+                    flag=1;
+                    break;
+                }
+             }
+          if(flag==0)
+        {
         addressToAmountFunded[msg.sender] += msg.value;
         funders.push(msg.sender);
-    }
+          }
+       }
+    
     
     function getVersion() public view returns (uint256){
         // ETH/USD price feed address of Sepolia Network.
